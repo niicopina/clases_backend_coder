@@ -38,7 +38,5 @@ let respuesta1 = dividBien(10, 3) //cuando tiene exito usaremos THEN
 let respuesta2 = dividBien(10, 0) //cuando se rechaza usaremos CATCH
     .then(res => console.log(`el resultado es ${res}`))
     .catch(err=> console.log(err))
-
-
 console.log(respuesta2)
 
