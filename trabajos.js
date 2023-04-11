@@ -40,33 +40,41 @@ class TicketManager {
         console.log(found_event.participants)
         if(found_event){
             if(found_event.capacity > found_event.participants.length){
-                let user = found_event.participants.includes(user_id)
-                if(user) {
+                if(found_event.participants.includes(user_id)) {
                     console.log('Ya está en la lista')
                 } else {
                     console.log('Agregando usuario' + user_id)
                     found_event.participants.push(user_id)
                     console.log(found_event.participants)
                 }
-            }else {
+            } else {
                 console.log('No hay más capacidad')
             }
             if(new_name){
                 found_event.name = new_name
-                for(let each of this.events){ //si coincide el id del evento a modificar
-                    if(each.id === event_id){ //retorno el evento encontrado y luego modificado
-                        return found_event    //en caso contrario (no coincide)
-                    }else{                    //retorno el evento del array
-                        return each
-                    }
-                }
             }
+            return found_event
         }
-        addNewEvent(event_id, new_place, new_date){
-
-        }
+        return null
+    }
+    addNewEvent(event_id, new_place, new_date){
+        let found_event = this.getEventById(event_id)
+        if(found_event) {
+            this.addEvent({
+                name: found_event.name, 
+                place: new_place, 
+                price: found_event.price,
+                capacity: found_event.capacity,
+                date: new_date
+            })
+        console.log('se creo nuevo evento')
+    }}
+    deleteEvent(event_id){
+        this.events = this.events.filter(each => each.id !== event_id)
+        console.log('evento eliminado')
     }
 }
+
 let ticket = new TicketManager()
 ticket.addEvent({
     name: 'alice',
@@ -93,6 +101,9 @@ ticket.addEvent({
 ticket.addParticipant(3, 9)
 ticket.addParticipant(3, 15)
 ticket.addParticipant(1, 5)
-ticket.addParticipant(1, 5) */
+ticket.addParticipant(1, 5)
 ticket.addParticipant(1, 5, 'hola')
-ticket.getEventById(1)
+ticket.getEventById(1) */
+//ticket.addNewEvent(3, 'china', new Date('08/20/2023'))
+ticket.deleteEvent(1)
+ticket.getEvents()
