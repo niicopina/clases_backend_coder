@@ -27,10 +27,11 @@ function suma(n1, n2){
 }
 /* suma(5,10)
 suma(0, 8) */
-suma('hola', 23).then(res=>console.log(res)).catch(err=>console.log(err))
-suma(2, 3).then(res=>console.log(res)).catch(err=>console.log(err))
-suma(0, 3).then(res=>console.log(res)).catch(err=>console.log(err))
-multiplicar(0, 3).then(res=>console.log(res)).catch(err=>console.log(err))
+//suma('hola', 23).then(res=>console.log(res)).catch(err=>console.log(err))
+//suma(2, 3).then(res=>console.log(res)).catch(err=>console.log(err))
+//suma(0, 3).then(res=>console.log(res)).catch(err=>console.log(err))
+//multiplicar(0, 3).then(res=>console.log(res)).catch(err=>console.log(err))
+dividir(30, 5).then(res=>console.log(res)).catch(err=>console.log(err))
 
 
 function esNumero(num){
@@ -96,6 +97,22 @@ function multiplicar (n1, n2){
                     n1: verificarN1.message ?? 'El número es correcto', 
                     n2: verificarN2.message ?? 'El número es correcto'
                 })
+            }
+        }
+    )
+}
+function dividir(n1, n2){
+    return new Promise(
+        (resolve, reject) => {
+            let verificarN1 = esNumero(n1)
+            let verificarN2 = esNumero(n2)
+            if(verificarN1.number && verificarN2.number){
+                let resultado = verificarN1.number / verificarN2.number
+                if(verificarN2.number === 0){
+                    return reject('No se puede dividir por 0')
+                } else {
+                    return resolve(resultado)
+                }
             }
         }
     )
