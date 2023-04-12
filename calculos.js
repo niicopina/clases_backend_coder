@@ -9,13 +9,17 @@ function suma(n1, n2){
 
             if(verificarN1.number && verificarN2.number){
                 let verificarSumaMayorACero = verificarN1.number + verificarN2.number
-                if(verificarSumaMayorACero){
+                if(verificarSumaMayorACero > 0){
                     return resolve(verificarSumaMayorACero)
+                }else{
+                    return reject({
+                        error: 'La calculadora solo debe devolvel valores positivos'
+                    })
                 }
             }else{
-                reject({
-                    error1: verificarN1.message, 
-                    error2: verificarN2.message
+                return reject({
+                    n1: verificarN1.message ?? 'El número es correcto', 
+                    n2: verificarN2.message ?? 'El número es correcto'
                 })
             }
 
