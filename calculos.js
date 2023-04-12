@@ -22,12 +22,6 @@ function suma(n1, n2){
                     n2: verificarN2.message ?? 'El número es correcto'
                 })
             }
-
-            if(verificarN1 && verificarN2){
-                resolve('OK')
-            }else{
-                reject('Not Ok')
-            }
         }
     )
 }
@@ -61,16 +55,31 @@ async function calculos(num1,num2,operacion){
 }
 function resta (n1, n2){
     return new Promise(
-        (resolve, reject)=> {
+        (resolve, reject) => {
             let verificarN1 = esNumero(n1)
             let verificarN2 = esNumero(n2)
             if(verificarN1.number && verificarN2.number){
                 let resultado = verificarN1.number - verificarN2.number
-                return resolve(resultado)
+                if(resultado > 0){
+                    return resolve(resultado)
+                } else {
+                    return reject({
+                        error: 'La calculadora solo debe devolvel valores positivos'
+                    })
+                }
+            }else{
+                return reject({
+                    n1: verificarN1.message ?? 'El número es correcto', 
+                    n2: verificarN2.message ?? 'El número es correcto'
+                })
             }
-            if(resultaod>0){
+        }
+    )
+}
+function multiplicar (n1, n2){
+    return new Promise(
+        (resolve, reject) => {
 
-            }
         }
     )
 }
