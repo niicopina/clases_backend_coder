@@ -7,13 +7,13 @@ class UserManager {
         this.init(path)
     }
     init(path){           //init es el metodo que al definirse una instrancia de la clase: crea el arhcivo si no existe
-        let file = fs.existsSync(path, '[]')
+        let file = fs.existsSync(path)
         if(!file){
-            fs.promises.writeFile(path)
+            fs.promises.writeFile(path, '[]')
                 .then(res=>console.log('file created'))
                 .catch(err=>console.log(err))
         } else {
-            fs.promises.readFile(path)
+            fs.promises.readFile(path, 'utf-8')
                 .then(res=> this.users = JSON.parse(res))
                 .catch(err=>console.log(err))
         }
@@ -33,3 +33,6 @@ class UserManager {
 let manager = new UserManager('./data/users.json')
 manager.add_user({name: 'igna', last_name: 'bibo', age: 32, carts: []})
 manager.add_user({name: 'nico', last_name: 'piña', age: 30, carts: []})
+manager.add_user({name: 'maty', last_name: 'lopez', age: 40, carts: []})
+manager.add_user({name: 'santi', last_name: 'ada', age: 20, carts: []})
+

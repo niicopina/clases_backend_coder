@@ -5,11 +5,25 @@
     "age": 32,
     "carts": [],
     "id": 1
-  }
-]  {
+  },
+  {
     "name": "nico",
     "last_name": "piña",
     "age": 30,
+    "carts": [],
+    "id": 1
+  },
+  {
+    "name": "maty",
+    "last_name": "lopez",
+    "age": 40,
+    "carts": [],
+    "id": 1
+  },
+  {
+    "name": "santi",
+    "last_name": "ada",
+    "age": 20,
     "carts": [],
     "id": 1
   }
