@@ -33,15 +33,37 @@ class UserManager {
     }
     read_user(id){
         let one = this.users.find(each => each.id === id)
-        return one
+        if(!one){
+            console.log('error: not found')
+            return null
+        } else {
+            console.log('finded user: ' + id)
+            return one
+        }
     }
     async update_user(id, data){
         //data es el objeto con las propiedades que necesito modificar del usuariuo
         try {
             //busco el usuario
-            let one = this.read_user(id)
+            let one = this.read_user(id) // si no lo encuentra me devuelve un null
+            if(!one){
+                console.log('error: not found user to update')
+                return 'error: not found user to update'
+            }
+            //Data debe tener propiedades a modificar
+            if(Object.keys(data).length === 0){
+                console.log('error: insert some values')
+                return 'error: insert some values'
+            }
             //itero para modificar la propuedad correspondiuente
             for(let prop in data) {
+                //verificar que la propiedad es parte de la forma del objeto
+                //es decir que la prop pertenece al objeto
+                //es decir que viene una prop que existe etc (ej: viene nombre en vez de name)
+                if(prop !== 'name' || prop !== 'last_name' || prop !== 'age' || prop !== 'carts'){
+                    console.log(`error: ${prop} is not a correct property`)
+                    return 'error: insert a correct property'
+                }
                 one[prop] = data[prop]
             }
             //convierto a texto plano el array
@@ -53,14 +75,29 @@ class UserManager {
             return 'error at updating user'
         }
     }
-}
-let manager = new UserManager('./data/users.json')
-manager.add_user({name: 'igna', last_name: 'bibo', age: 32, carts: []})
-manager.add_user({name: 'nico', last_name: 'piña', age: 30, carts: []})
-manager.add_user({name: 'maty', last_name: 'lopez', age: 40, carts: []})
-manager.add_user({name: 'nati', last_name: 'ada', age: 20, carts: []})
-manager.add_user({name: 'agus', last_name: 'sasa', age: 22, carts: []})
-manager.add_user({name: 'mili', last_name: 'bava', age: 24, carts: []})
-manager.add_user({name: 'sabri', last_name: 'adhasda', age: 26, carts: []})
+    async destroy_user(id) {
+        try {
+            //la condicion mas importante a configurar a este metodo es 
+            //que el usuario con ese id sea parte del array ya que si no, no existe y no hay nada para borrar
+            let one = this.read_user(id)
 
+            this.users = this.users.filter( each => each.id !== id)
+            let data_json = JSON.stringify(this.users, null, 2)
+            await fs.promises.writeFile(this.path, data_json)
+            return 'delete user: ' + id
+        } catch(error) {
+            return 'error at deleting user'
+        }
+    }
+}
+async function manager(){
+let manager = new UserManager('./data/users.json')
+await manager.add_user({name: 'igna', last_name: 'bibo', age: 32, carts: []})
+await manager.add_user({name: 'nico', last_name: 'piña', age: 30, carts: []})
+await manager.add_user({name: 'john', last_name: 'piña', age: 30, carts: []})
+await manager.update_user(3, {name: 'willy', carts: ['celular']})
+await manager.update_user(2, {name: 'agus'})
+await manager.destroy_user(1)
+await manager.destroy_user(4)
+}
 
